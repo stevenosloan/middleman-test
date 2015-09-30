@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Middleman::Test::Extension do
 
   it "is registered as an extension" do
-    expect( Middleman::Extensions.registered[:test] ).to eq Middleman::Test::Extension
+    expect( Middleman::Extensions.registered.keys.include?(:test) ).to be true
   end
 
   context "with the base fixture app" do
@@ -19,6 +19,10 @@ describe Middleman::Test::Extension do
 
     it "activates the extension" do
       expect( @mm.extensions[:test] ).to be_a Middleman::Test::Extension
+    end
+
+    it "adds duplicate resource" do
+      expect( @mm.sitemap.resources.select { |r| r.metadata.has_key?(:key) }.first ).to be_a Middleman::Test::Extension::TestResource
     end
   end
 
