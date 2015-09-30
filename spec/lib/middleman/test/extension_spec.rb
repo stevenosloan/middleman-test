@@ -6,6 +6,22 @@ describe Middleman::Test::Extension do
     expect( Middleman::Extensions.registered[:test] ).to eq Middleman::Test::Extension
   end
 
+  context "with the base fixture app" do
+    before :each do
+      Given.fixture 'base'
+      @mm = Middleman::Fixture.app
+      @extension = @mm.extensions[:test]
+    end
+
+    after :each do
+      Given.cleanup!
+    end
+
+    it "activates the extension" do
+      expect( @mm.extensions[:test] ).to be_a Middleman::Test::Extension
+    end
+  end
+
 end
 
 #   it "is registered as an extension" do
